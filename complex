@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="music-player">
+    <audio id="audio-player" controls>
+      Your browser does not support the audio element.
+    </audio>
+    <div class="controls">
+      <button id="prev-btn">&lt;&lt;</button>
+      <button id="play-pause-btn">Play</button>
+      <button id="next-btn">&gt;&gt;</button>
+    </div>
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+    <ul class="playlist">
+      <li data-src="path_to_song1.mp3">Song 1</li>
+      <li data-src="path_to_song2.mp3">Song 2</li>
+      <li data-src="path_to_song3.mp3">Song 3</li>
+      <!-- Add more songs to the playlist as needed -->
+    </ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.music-player {
+  width: 400px;
+  text-align: center;
+}
+
+.controls {
+  margin: 10px 0;
+}
+
+.playlist {
+  list-style: none;
+  padding: 0;
+}
+
+.playlist li {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.playlist li.active {
+  background-color: #f0f0f0;
+}
+const audioPlayer = document.getElementById('audio-player');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const volumeSlider = document.getElementById('volume-slider');
+const playlistItems = document.querySelectorAll('.playlist li');
+
+let currentTrackIndex = 0;
+let isPlaying = false;
+
+function playPause() {
+  if (isPlaying) {
+    audioPlayer.pause();
+    playPauseBtn.textContent = 'Play';
+  } else {
+    audioPlayer.play();
+    playPauseBtn.textContent = 'Pause';
+  }
+  isPlaying = !isPlaying;
+}
+
+function loadTrack(trackIndex) {
+  const trackSrc = playlistItems[trackIndex].getAttribute('data-src');
+  audioPlayer.src = trackSrc;
+  audioPlayer.load();
+  playPause();
+  highlightCurrentTrack(trackIndex);
+}
+
+function nextTrack() {
+  currentTrackIndex = (currentTrackIndex + 1) % playlistItems.length;
+  loadTrack(currentTrackIndex);
+}
+
+function prevTrack() {
+  currentTrackIndex = (currentTrackIndex
+const audioPlayer = document.getElementById('audio-player');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const volumeSlider = document.getElementById('volume-slider');
+const playlistItems = document.querySelectorAll('.playlist li');
+
+let currentTrackIndex = 0;
+let isPlaying = false;
+
+function playPause() {
+  if (isPlaying) {
+    audioPlayer.pause();
+    playPauseBtn.textContent = 'Play';
+  } else {
+    audioPlayer.play();
+    playPauseBtn.textContent = 'Pause';
+  }
+  isPlaying = !isPlaying;
+}
+
+function loadTrack(trackIndex) {
+  const trackSrc = playlistItems[trackIndex].getAttribute('data-src');
+  audioPlayer.src = trackSrc;
+  audioPlayer.load();
+  playPause();
+  highlightCurrentTrack(trackIndex);
+}
+
+function nextTrack() {
+  currentTrackIndex = (currentTrackIndex + 1) % playlistItems.length;
+  loadTrack(currentTrackIndex);
+}
+
+function prevTrack() {
+  currentTrackIndex = (currentTrackIndex - 1 + playlistItems.length) % playlistItems.length;
+  loadTrack(currentTrackIndex);
+}
+
+function setVolume() {
+  audioPlayer.volume = volumeSlider.value;
+}
+
+function highlightCurrentTrack(trackIndex) {
+  for (let i = 0; i < playlistItems.length; i++) {
+    playlistItems[i].classList.remove('active');
+  }
+  playlistItems[trackIndex].classList.add('active');
+}
+
+playPauseBtn.addEventListener('click', playPause);
+nextBtn.addEventListener('click', nextTrack);
+prevBtn.addEventListener('click', prevTrack);
+volumeSlider.addEventListener('input', setVolume);
+
+for (let i = 0; i < playlistItems.length; i++) {
+  playlistItems[i].addEventListener('click', function () {
+    currentTrackIndex = i;
+    loadTrack(currentTrackIndex);
+  });
+}
+
+// Automatically update the play/pause button text when the audio state changes
+audioPlayer.addEventListener('play', () => {
+  isPlaying = true;
+  playPauseBtn.textContent = 'Pause';
+});
+
+audioPlayer.addEventListener('pause', () => {
+  isPlaying = false;
+  playPauseBtn.textContent = 'Play';
+});
+
+// Load the first track in the playlist when the page loads
+loadTrack(currentTrackIndex);
