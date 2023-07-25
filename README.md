@@ -1,2 +1,1 @@
-# Musicplayer
-Musicplayer
+Please make sure to replace 'path_to_song1.mp3', 'path_to_song2.mp3', 'path_to_song3.mp3', and so on with the actual paths to your music files on the server. The music player will now have a playlist, play/pause buttons, track selection, volume control, and more interactive features.
